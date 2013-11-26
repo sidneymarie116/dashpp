@@ -33,9 +33,7 @@ public class SettingsActivity extends Activity {
 	{
 		super.onCreate (savedInstanceState);
 		setContentView (R.layout.settings);
-		
-		//Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
-			
+					
 		//format is as follows:
 		//Ambient Air Temperature,Engine RPM,Mass Air Flow,Fuel Level,Long Term Fuel Trim Bank 1,
 		//Throttle Position,Trouble Codes,Vehicle Speed,Fuel Consumption,Fuel Economy,Fuel Economy
@@ -51,10 +49,9 @@ public class SettingsActivity extends Activity {
 		data[8] = "Fuel Consumption,",-1.0
 		data[9] = "Fuel Economy,",-235.2
 		*/
-		//Also need to look into truncating units
 
 		//keep a table of global averages
-		// -----------GLOBAL-----------
+		/* Global averages */
 		double air_temp = 0;
 		double engine_rpm = 0;
 		double maf = 0;
@@ -67,8 +64,7 @@ public class SettingsActivity extends Activity {
 		double fuel_econ = 0;
 		int num_entries = 0;
 
-		//keep a table of the trip averages
-		//-----------TRIP-----------
+		/* Trip averages */
 		double air_temp_trip = 0;
 		double engine_rpm_trip = 0;
 		double maf_trip = 0;
@@ -81,51 +77,24 @@ public class SettingsActivity extends Activity {
 		double fuel_econ_trip = 0;
 		int num_entries_trip = 0;     //or use some variation of num_entries
 		
-		String s0 = "";
-		String s1 = "";
-		String s2 = "";
-		String s3 = "";
-		String s4 = "";
-		String s5 = "";
-		String s6 = "";
-		String s7 = "";
-		String s8 = "";
-		String s9 = "";
-		//int num_entries_trip = 0;     //or use some variation of num_entries
+		String s0 = "", s1 = "", s2 = "", s3 = "", s4 = "", s5 = "", s6 = "", s7 = "", s8 = "", s9 = "";
+		//int num_entries_trip = 0;   //or use some variation of num_entries
 
-		//open the CSV file
-		
-		//String open_csv = "/sdcard/output_20_9.csv";
-		//InputStream input = new BufferedInputStream(Files.newInputStream(open_csv));
-		//BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-		
-		//InputStream csvStream = assetManager.open(CSV_PATH);
-	    //InputStreamReader csvStreamReader = new InputStreamReader(csvStream);
-	    //CSVReader csvReader = new CSVReader(csvStreamReader);
-			
+		/* open the CSV file */
 		String csvFile = "/sdcard/output_20_9.csv";
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
-		
-		//Ambient Air Temperature,Engine RPM,Mass Air Flow,Fuel Level,
-		//Long Term Fuel Trim Bank 1,Throttle Position,Trouble Codes,
-		//Vehicle Speed,Fuel Consumption,Fuel Economy
-		//"24C,""779 RPM,""6.86g/s,""0.0%,""0.00%,
-		//""15.3%,""null,""2km/h,""-1.0,""-235.2,"
 	
-	    try 
-	    {
+		/* Parse the CSV file based on expected input */
+	    try {
 	    	boolean first_line = true;
 	        br = new BufferedReader(new FileReader(csvFile));
 	        String[] RowData = null;
 	        Toast.makeText(getApplicationContext(), "Read in file", Toast.LENGTH_LONG).show();
-	    
-	        //while ((line = br.readLine()) != null)
-	        while ((line = br.readLine()) != null)
-	        {
-	        	if(!first_line)
-	        	{
+	        
+	        while ((line = br.readLine()) != null) {
+	        	if(!first_line) {
 	        		RowData = line.split(cvsSplitBy);
 	        		s0 = RowData[0];
 	        		s0 = s0.substring(1, s0.length()-1);
@@ -171,21 +140,12 @@ public class SettingsActivity extends Activity {
 	        		//now increment num_entries;
 	        		num_entries_trip++;
 	        	}
-	        	if(first_line)
-	        	{
+	        	if(first_line) {
 	        		RowData = line.split(cvsSplitBy);
 	        		//String test = RowData[0];
 	        		//Toast.makeText(getApplicationContext(), "" + test, Toast.LENGTH_LONG).show();
 	        		first_line = false;
 	        	}
-	        	/*Toast.makeText(getApplicationContext(), "Got in", Toast.LENGTH_LONG).show();
-	        	if(!first_line)
-				{
-					 Toast.makeText(getApplicationContext(), "Input not null", Toast.LENGTH_LONG).show();
-					 RowData = line.split(cvsSplitBy);
-					 
-				}
-				*/
 			}      
 	        
 			} catch (FileNotFoundException e) {
