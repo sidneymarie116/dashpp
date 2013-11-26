@@ -3,15 +3,7 @@
  */
 package eu.lighthouselabs.obd.reader.activity;
 
-import java.io.BufferedWriter;
 import java.io.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +37,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-//import eu.lighthouselabs.obd.commands.ObdBaseCommand;
 import eu.lighthouselabs.obd.commands.SpeedObdCommand;
 import eu.lighthouselabs.obd.commands.control.CommandEquivRatioObdCommand;
 import eu.lighthouselabs.obd.commands.control.TroubleCodesObdCommand;
@@ -187,135 +178,68 @@ public class MainActivity extends Activity {
 		mListener = new IPostListener() {
 			public void stateUpdate(ObdCommandJob job) {
 				
-				//debugging 
-				/*try {
-					Toast.makeText(getApplicationContext(), "start cmds section", Toast.LENGTH_SHORT).show();
-				}
-				catch (Exception e) {
-					Toast.makeText(getApplicationContext(), "FAIL start cmds section", Toast.LENGTH_SHORT).show();
-				}*/
-				
 				String cmdName = job.getCommand().getName();
 				String cmdResult = job.getCommand().getFormattedResult();
 
 				Log.d(TAG, FuelTrim.LONG_TERM_BANK_1.getBank() + " equals " + cmdName + "?");
 				
-				//-------------------------- other commands --------------------------
-				/*ArrayList<ObdBaseCommand> cmds = ConfigActivity.getObdCommands(prefs);
-				String outputcmds = "\n";
-				for (int i=0; i<cmds.size(); i++)
-				{
-					outputcmds += (cmds.get(i) + "\n");
-				}
-				String myFile = "/sdcard/validcommands.txt";
-				//boolean exists = new File(csv).exists();
-				
-				try {
-					PrintWriter writer = new PrintWriter("/sdcard/validcommands.txt", "UTF-8");
-					writer.println(outputcmds);
-					writer.close();
-				}
-				catch(IOException e) {
-					e.printStackTrace();
-				}*/
-				//--------------------------- end other commands --------------------------
-				/*validCommands.add(airTemp.getCommand().getName());
-				validCommands.add(speed.getCommand().getName());
-				validCommands.add(fuelEcon.getCommand().getName());
-				validCommands.add(rpm.getCommand().getName());
-				validCommands.add(maf.getCommand().getName());
-				validCommands.add(fuelLevel.getCommand().getName());
-				validCommands.add(ltft1.getCommand().getName());
-				//validCommands.add(ltft2.getCommand().getName());
-				//validCommands.add(stft1.getCommand().getName());
-				//validCommands.add(stft2.getCommand().getName());
-				validCommands.add(throt.getCommand().getName());
-				validCommands.add(troub.getCommand().getName());*/
-				
-				if (AvailableCommandNames.ENGINE_RPM.getValue().equals(cmdName)) 
-				{
+				if (AvailableCommandNames.ENGINE_RPM.getValue().equals(cmdName)) {
 					TextView tvRpm = (TextView) findViewById(R.id.rpm_text);
 					tvRpm.setText(cmdResult);
-					//new from sid
-					//cmdResult = cmdResult.substring(1 , cmdResult.length()-5);
 					addTableRow(cmdName, cmdResult);
 				} 
-				else if (AvailableCommandNames.SPEED.getValue().equals(cmdName)) 
-				{
+				else if (AvailableCommandNames.SPEED.getValue().equals(cmdName)) {
 					TextView tvSpeed = (TextView) findViewById(R.id.spd_text);
 					tvSpeed.setText(cmdResult);
 					speed = ((SpeedObdCommand) job.getCommand()).getMetricSpeed();
-					//new from sid
-					//cmdResult = cmdResult.substring(1 , cmdResult.length()-5);
 					addTableRow(cmdName, cmdResult);
 				} 
-				else if (AvailableCommandNames.MAF.getValue().equals(cmdName)) 
-				{
+				/*else if (AvailableCommandNames.MAF.getValue().equals(cmdName)) {
 					maf = ((MassAirFlowObdCommand) job.getCommand()).getMAF();
-					//cmdResult = cmdResult.substring(1 , cmdResult.length()-4);
 					addTableRow(cmdName, cmdResult);
 				} 
-				else if (FuelTrim.LONG_TERM_BANK_1.getBank().equals(cmdName)) 
-				{
+				else if (FuelTrim.LONG_TERM_BANK_1.getBank().equals(cmdName)) {
 					ltft = ((FuelTrimObdCommand) job.getCommand()).getValue();
-					//cmdResult = cmdResult.substring(1 , cmdResult.length()-2);
 					addTableRow(cmdName, cmdResult);
 				} 
-				else if (AvailableCommandNames.FUEL_ECONOMY.getValue().equals(cmdName)) 
-				{
+				else if (AvailableCommandNames.FUEL_ECONOMY.getValue().equals(cmdName))  {
 					mpg1 = ((FuelEconomyObdCommand) job.getCommand()).getFormattedResult();
 					float mpg2 = ((FuelEconomyObdCommand) job.getCommand()).getMilesPerUSGallon();
-					//float mpg3 = ((FuelEconomyObdCommand) job.getCommand()).
-					//cmdResult = cmdResult.substring(1 , cmdResult.length()-1);
 					addTableRow(cmdName, cmdResult);
-					//addTableRow(cmdName, mpg2 + "");
 				} 
-				else if (AvailableCommandNames.THROTTLE_POS.getValue().equals(cmdName)) 
-				{
+				else if (AvailableCommandNames.THROTTLE_POS.getValue().equals(cmdName)) {
 					throt = ((ThrottlePositionObdCommand) job.getCommand()).getFormattedResult();
-					//cmdResult = cmdResult.substring(1 , cmdResult.length()-2);
 					addTableRow(cmdName, cmdResult);
 				} 
-				else if (AvailableCommandNames.TROUBLE_CODES.getValue().equals(cmdName))
-				{
+				else if (AvailableCommandNames.TROUBLE_CODES.getValue().equals(cmdName)) {
 					troub = ((TroubleCodesObdCommand) job.getCommand()).getFormattedResult();
 					addTableRow(cmdName, cmdResult);
-				}
-				else if (AvailableCommandNames.AMBIENT_AIR_TEMP.getValue().equals(cmdName))
-				{
+				}*/
+				else if (AvailableCommandNames.AMBIENT_AIR_TEMP.getValue().equals(cmdName)) {
+					/* HACK not sure why air prints twice to start out */
 					if(air_b == false)
 						air_b = true;
-					else
-					{
+					else {
 						air = ((AmbientAirTemperatureObdCommand) job.getCommand()).getFormattedResult();
-						//cmdResult = cmdResult.substring(1, cmdResult.length()-2);
 						addTableRow(cmdName, cmdResult);
 					}
 				}
-				else if (AvailableCommandNames.FUEL_LEVEL.getValue().equals(cmdName))
-				{
+				/*else if (AvailableCommandNames.FUEL_LEVEL.getValue().equals(cmdName)) {
 					fuel = ((FuelLevelObdCommand) job.getCommand()).getFormattedResult();
-					//cmdResult = cmdResult.substring(1 , cmdResult.length()-1);
 					addTableRow(cmdName, cmdResult);
 				}
-				else if (AvailableCommandNames.FUEL_CONSUMPTION.getValue().equals(cmdName)) 
-				{
+				else if (AvailableCommandNames.FUEL_CONSUMPTION.getValue().equals(cmdName)) {
 					String fuel_consumption = ((FuelConsumptionObdCommand) job.getCommand()).getFormattedResult();
-					//cmdResult = cmdResult.substring(1 , cmdResult.length()-1);
 					addTableRow(cmdName, fuel_consumption);
-				} 
-				else if (AvailableCommandNames.FUEL_ECONOMY_WITH_MAF.getValue().equals(cmdName)) 
-				{
-					//String fuel_econ_maf = ((FuelEconomyWithMAFObdCommand) job.getCommand()).getFormattedResult();
-					//FuelType fuelType, int speed, double maf, float ltft, boolean useImperial
+				} */
+				else if (AvailableCommandNames.FUEL_ECONOMY_WITH_MAF.getValue().equals(cmdName)) {
 					FuelEconomyWithMAFObdCommand fuelEconCmd2 = new FuelEconomyWithMAFObdCommand(
 							FuelType.DIESEL, speed, maf, ltft, true);
 					String mpergallon = String.format("%.2f", fuelEconCmd2.getMPG());
 					addTableRow(cmdName, mpergallon);
 				}
-				else 
-				{
-					//addTableRow(cmdName, cmdResult);
+				else {
+					addTableRow(cmdName, cmdResult);
 				}
 			}
 		};
@@ -335,7 +259,6 @@ public class MainActivity extends Activity {
 		/*
 		 * Validate Bluetooth service.
 		 */
-		// Bluetooth device exists?
 		final BluetoothAdapter mBtAdapter = BluetoothAdapter
 				.getDefaultAdapter();
 		if (mBtAdapter == null) {
@@ -375,14 +298,6 @@ public class MainActivity extends Activity {
 			bindService(mServiceIntent, mServiceConnection,
 					Context.BIND_AUTO_CREATE);
 		}
-		/*try {
-			writer.flush();
-			writer.close();
-		}
-		catch(IOException e)
-		{
-		     e.printStackTrace();
-		} */
 	}
 
 	@Override
@@ -456,11 +371,6 @@ public class MainActivity extends Activity {
 		}
 		return false;
 	}
-
-	// private void staticCommand() {
-	// Intent commandIntent = new Intent(this, ObdReaderCommandActivity.class);
-	// startActivity(commandIntent);
-	// }
 
 	private void startLiveData() {
 		Log.d(TAG, "Starting live data..");
@@ -554,7 +464,7 @@ public class MainActivity extends Activity {
 			value.setText(val);
 			tr.addView(name);
 			
-			// -- try adding csv entry here -- //
+			/* easy-to-read output */
 			String csv = "/sdcard/output_20_8.csv";
 			boolean exists = new File(csv).exists();
 			
@@ -564,8 +474,7 @@ public class MainActivity extends Activity {
 				if (!exists) {
 					//list all of the validCommands
 					//
-					for(int i=0; i<validCommands.size(); i++)
-					{
+					for(int i=0; i<validCommands.size(); i++) {
 						writer.write(validCommands.get(i));
 					}
 
@@ -583,7 +492,7 @@ public class MainActivity extends Activity {
 				Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 			}
 			
-			// -- try adding csv entry here -- //
+			/* correctly formatted output */
 			String csv1 = "/sdcard/output_20_9.csv";
 			boolean exists1 = new File(csv1).exists();
 			
@@ -592,43 +501,21 @@ public class MainActivity extends Activity {
 				
 				if (!exists1) {
 					//list all of the validCommands
-					//
-					for(int i=0; i<validCommands.size(); i++)
-					{
+					for(int i=0; i<validCommands.size(); i++) {
 						writer1.write(validCommands.get(i));
 					}
-
 					writer1.endRecord();
 				}
 				
-				//writer1.write(key + ",");
 				writer1.write(val + ",");
-				//writer1.endRecord();
-				if(key.equals(validCommands.get(validCommands.size()-1)))
+				if(key.equals(validCommands.get(validCommands.size()-1))) {
 					writer1.endRecord();
+				}
 				
 				writer1.close();
 			} catch (IOException e) {
 				Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 			}
-			
-			/*
-			 * String stest = (key + "\n" + value + "\n");
-		     * try {
-					FileWriter mynewwriter = new FileWriter("/sdcard/nov7_mynewwriter.csv");
-					mynewwriter.append(stest);
-					mynewwriter.flush();
-					//mynewwriter.close();
-			 * } catch(IOException e) {
-					Toast.makeText(getApplicationContext(), "" +e.getMessage(), 100).show();
-			 * }
-				
-			 * try {
-					fw.append(stest);
-			 * } catch(IOException e) {
-					Toast.makeText(getApplicationContext(), "" +e.getMessage(), 100).show();
-			 * } 
-			 */
 			
 			tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
 					LayoutParams.WRAP_CONTENT));
@@ -727,18 +614,6 @@ public class MainActivity extends Activity {
 		//validCommands.add(fuelEconCmdMAF.getName());
 		//validCommands.add(fuelEcon.getCommand().getName());
 		
-		//focus here, trying to queue too many commands?
-		///if we are able to get speed, then expand on that
-		//try this:
-		/*
-		 * public enum ObdCommandJobState {
-			    NEW,
-			    RUNNING,
-			    FINISHED,
-			    EXECUTION_ERROR,
-			    QUEUE_ERROR
-			  }
-		 */
 		//added all commands!!!! can add more based on the preferences..hopefully!
 		//next steps will involve visualization and actual profile building
 		
