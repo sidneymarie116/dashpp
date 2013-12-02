@@ -43,7 +43,7 @@ public class AlertActivity extends Activity implements OnClickListener, OnInitLi
             	Intent checkTTSIntent = new Intent();
             	checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
             	startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
-            	
+
             	// return to main
             	final Button mainAct = (Button) findViewById (R.id.mainAlertButton);
             	mainAct.setOnClickListener (new View.OnClickListener() {
@@ -56,7 +56,7 @@ public class AlertActivity extends Activity implements OnClickListener, OnInitLi
 					}
 				});
     	}
-    	
+
         //respond to button clicks
     	public void onClick (View v) 
     	{
@@ -74,7 +74,8 @@ public class AlertActivity extends Activity implements OnClickListener, OnInitLi
     	}
         
     	//act on result of TTS data check
-    	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	@Override
+		protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     		if (requestCode == MY_DATA_CHECK_CODE) {
     			if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
     					// the user has the necessary data - create the TTS
