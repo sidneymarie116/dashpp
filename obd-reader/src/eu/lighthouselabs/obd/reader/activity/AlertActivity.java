@@ -44,18 +44,7 @@ public class AlertActivity extends Activity implements OnClickListener, OnInitLi
             	checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
             	startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
 
-            	// return to main
-            	final Button mainAct = (Button) findViewById (R.id.mainAlertButton);
-            	mainAct.setOnClickListener (new View.OnClickListener() {
-					
-					@Override
-					public void onClick (View v) {
-						// TODO Auto-generated method stub
-						Intent act = new Intent (v.getContext(), MainMenuActivity.class);
-						startActivity (act);
-					}
-				});
-    	}
+        }
 
         //respond to button clicks
     	public void onClick (View v) 

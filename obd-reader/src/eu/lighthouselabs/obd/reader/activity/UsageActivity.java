@@ -12,16 +12,5 @@ public class UsageActivity extends Activity {
 	protected void onCreate (Bundle savedInstanceState) {
 			super.onCreate (savedInstanceState);
 			setContentView (R.layout.usage);
-			
-			final Button switchMain = (Button) findViewById (R.id.mainUsageButton);
-			switchMain.setOnClickListener (new View.OnClickListener() {
-				
-				@Override
-				public void onClick (View v) {
-					// TODO Auto-generated method stub
-					Intent act = new Intent (v.getContext(), MainMenuActivity.class);
-					startActivity (act);
-				}
-			});
 	}
 }

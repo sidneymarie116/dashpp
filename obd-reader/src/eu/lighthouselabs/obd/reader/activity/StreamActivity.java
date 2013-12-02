@@ -1,6 +1,8 @@
 package eu.lighthouselabs.obd.reader.activity;
 
 import eu.lighthouselabs.obd.reader.R;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
@@ -16,14 +18,15 @@ public class StreamActivity extends Activity {
 	// Sample WebViewClient in case it was needed...
     // See continueWhenLoaded() sample function for the best place to set it on our webView
     
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 			super.onCreate (savedInstanceState);
 			setContentView (R.layout.stream);
-			
+
 			WebView web = (WebView) findViewById(R.id.myWebView);
 			web.getSettings().setJavaScriptEnabled(true);
-			
+
 			if (Build.VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) 
 				  web.getSettings().setAllowUniversalAccessFromFileURLs(true);
 
@@ -41,16 +44,5 @@ public class StreamActivity extends Activity {
 			// web.loadUrl("https://drive.google.com/file/d/0B_Ll_Vw4Gui8UFhzOFluRk1YZkU");
 			web.loadUrl("file:///android_asset/chart/testOutput.html");
 			web.loadUrl("https://drive.google.com/file/d/0B_Ll_Vw4Gui8VE53aWs2QTJoRHM/edit?usp=sharing");
-			
-			final Button switchMain = (Button) findViewById (R.id.mainStreamButton);
-			switchMain.setOnClickListener (new View.OnClickListener() {
-				
-				@Override
-				public void onClick (View v) {
-					// TODO Auto-generated method stub
-					Intent act = new Intent (v.getContext(), MainMenuActivity.class);
-					startActivity (act);
-				}
-			});
 	}
 }

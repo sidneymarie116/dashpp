@@ -67,15 +67,6 @@ public class ProfileActivity extends Activity {
 		 *  look at fuel_economy
 		 */
 		
-    	final Button switchMain = (Button) findViewById (R.id.mainSettingsButton);
-    	switchMain.setOnClickListener (new View.OnClickListener() {
-			@Override
-			public void onClick (View v) {
-				// TODO Auto-generated method stub
-				Intent act = new Intent (v.getContext(), MainMenuActivity.class);
-				startActivity (act);
-			}
-    	});
 	}
 	
 	private void calculateTripAverages() 

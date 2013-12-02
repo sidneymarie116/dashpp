@@ -150,19 +150,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		
-		// -- Button to return to Main -- //
-		
-		final Button switchMain = (Button) findViewById (R.id.mainOBDButton);
-		switchMain.setOnClickListener (new View.OnClickListener() {
-			
-			@Override
-			public void onClick (View v) {
-				// TODO Auto-generated method stub
-				Intent act = new Intent (v.getContext(), MainMenuActivity.class);
-				startActivity (act);
-			}
-		});
-
 		mListener = new IPostListener() {
 			public void stateUpdate(ObdCommandJob job) 
 			{

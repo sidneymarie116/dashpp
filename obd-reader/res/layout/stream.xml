@@ -16,11 +16,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true" />
-      
-    <Button
-        android:id="@+id/mainStreamButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Return to Main" />
+
 
 </RelativeLayout>

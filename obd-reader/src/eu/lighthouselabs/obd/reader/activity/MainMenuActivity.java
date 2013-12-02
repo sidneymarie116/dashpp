@@ -35,16 +35,10 @@ public class MainMenuActivity extends Activity {
 				super.onCreate (savedInstanceState);
 				setContentView (R.layout.main_menu);
 				// -- Camera connection -- //
-				//try {
+				if (ClientThread.instance == null) {
 					Intent srv = new Intent(this, ClientThread.class);
 					startService(srv);
-					/*
 				}
-				catch (Exception e) {
-					e.printStackTrace();
-					// Service could not be started
-				}
-				*/
 				
 				final Button switchActOne = (Button) findViewById (R.id.obdButton);
 				switchActOne.setOnClickListener (new View.OnClickListener() {
