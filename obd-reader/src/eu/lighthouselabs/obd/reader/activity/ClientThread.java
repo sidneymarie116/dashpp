@@ -9,7 +9,6 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Locale;
-import java.util.Timer;
 
 import android.annotation.TargetApi;
 import android.app.Notification;
@@ -18,7 +17,12 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.p2p.WifiP2pManager.ActionListener;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Looper;
@@ -30,6 +34,7 @@ import eu.lighthouselabs.obd.reader.R;
 
 public class ClientThread extends Service implements OnInitListener
 {
+	private static Bitmap largeIcon;
 	private static TextToSpeech myTTS;
 	private static final int SERVERPORT = 1035;
 	private static final String SERVER_IP = "192.168.42.1";
@@ -49,12 +54,8 @@ public class ClientThread extends Service implements OnInitListener
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		try {
-			if (myTTS == null) {
-				/*
-				Intent installTTSIntent = new Intent();
-				installTTSIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-				this.getApplicationContext().startActivity(installTTSIntent);
-				*/
+			if (largeIcon == null) {
+				largeIcon = drawableToBitmap(getResources().getDrawable( R.drawable.icon ));
 			}
 			holder();
 			if (myTTS == null) {
@@ -174,6 +175,9 @@ public class ClientThread extends Service implements OnInitListener
 	public void displayNotification(String notificationTitle,String notificationString, boolean selfDestruct, boolean sayOutloud) 
 	{
 		int icon = R.drawable.stop;
+		if (largeIcon == null) {
+			largeIcon = drawableToBitmap(getResources().getDrawable( icon ));
+		}
 		CharSequence tickerText = notificationString;
 		long when = System.currentTimeMillis();
 		Context context = getApplicationContext();
@@ -187,6 +191,7 @@ public class ClientThread extends Service implements OnInitListener
          .setContentTitle(contentTitle)
          .setContentText(contentText)
          .setSmallIcon(icon)
+         .setLargeIcon(largeIcon)
          //.setContentIntent(contentIntent)
          .setVibrate(new long[] {0,100,200,300})
          //.setLargeIcon(aBitmap)
@@ -219,6 +224,19 @@ public class ClientThread extends Service implements OnInitListener
 		if (myTTS != null) {
 			myTTS.speak (toSpeak, TextToSpeech.QUEUE_FLUSH, null);
 		}
+	}
+
+	public static Bitmap drawableToBitmap (Drawable drawable) {
+	    if (drawable instanceof BitmapDrawable) {
+	        return ((BitmapDrawable)drawable).getBitmap();
+	    }
+
+	    Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Config.ARGB_8888);
+	    Canvas canvas = new Canvas(bitmap); 
+	    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+	    drawable.draw(canvas);
+
+	    return bitmap;
 	}
 
 	// setup TTS
