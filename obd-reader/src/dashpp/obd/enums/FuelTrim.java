@@ -47,7 +47,7 @@ public enum FuelTrim {
 			res = "Short Term Fuel Trim Bank 1";
 			break;
 		case 0x07:
-			res = "Long Term Fuel Trim Bank 1";
+			res = "FuelTrim";
 			break;
 		case 0x08:
 			res = "Short Term Fuel Trim Bank 2";
