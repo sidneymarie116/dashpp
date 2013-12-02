@@ -1,0 +1,155 @@
+﻿<?php /** @package WordPress @subpackage Default_Theme **/
+header("Access-Control-Allow-Origin: *");
+?>
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Dash++ Visualization Metrics</title>
+   <script src="https://www.google.com/jsapi"></script>
+   <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+   <script src="file:///android_asset/chart/jquery.csv-0.71.js"></script>
+   <script>
+   		
+    // load the visualization library from Google and set a listener
+		google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(drawChart);
+
+		function drawChart() 
+		{
+	        // access control
+	        // var xhr = new XMLHttpRequest();
+	        // xhr.open("GET", "file:///android_asset/chart/output.csv", true);
+	        alert("Data Gotten");
+	        // xhr.onreadystatechange = function(csvString) {
+	        //     if (xhr.readyState == 4) var resp = eval("(" + xhr.responseText + ")");
+	        // }
+	        
+	        $(document).ready(function() {
+	        	$.ajax({
+	        		type: "GET",
+	        		url: "file:///android_asset/chart/output.csv",
+	        		dataType: "text", 
+	        		success:function(csvString) { 
+
+  				// grab the CSV $.get()
+  				// $.get("file:///android_asset/chart/output.csv", function(csvString) 
+  				 
+  				// alert of proper data load
+	  				alert("Data Loaded");
+	  				
+	    			// transform the CSV string into a 2-dimensional array
+	    			var arrayData = $.csv.toArrays(csvString, {onParseValue: $.csv.hooks.castToScalar});
+	    
+	    			// this new DataTable object holds all the data
+	    			var data = new google.visualization.arrayToDataTable(arrayData);
+	    
+	          		// s p e e d  /  e n t r y 
+	
+	    			// this view can select a subset of the data at a time
+	    			var view = new google.visualization.DataView(data);
+	    			view.setColumns([0,2]);
+	    
+	    			// this sets basic options for our chart
+	    			var options = {
+	              		backgroundColor: 'transparent',
+	              		title: "Vehicle Speed (per Entry)",
+	      				hAxis: {title: data.getColumnLabel(0), minValue: data.getColumnRange(0).min, maxValue: data.getColumnRange(0).max},
+	      				vAxis: {title: data.getColumnLabel(2), minValue: data.getColumnRange(2).min, maxValue: data.getColumnRange(2).max},
+	      				legend: 'none'    			
+	            	};
+	
+	    			// this binds the chart to our <div> 
+	    			var chartone = new google.visualization.ScatterChart(document.getElementById('chartone'));
+	    			chartone.draw(view, options);
+	
+		          // r p m  /  e n t r y
+		
+		          // this view can select a subset of the data at a time
+		          var view = new google.visualization.DataView(data);
+		          view.setColumns([0,1]);
+		    
+		          // this sets basic options for our chart
+		          var options = {
+		              backgroundColor: 'transparent',
+		              title: "Engine Rotations per Minute (per Entry)",
+		              hAxis: {title: data.getColumnLabel(0), minValue: data.getColumnRange(0).min, maxValue: data.getColumnRange(0).max},
+		              vAxis: {title: data.getColumnLabel(1), minValue: data.getColumnRange(1).min, maxValue: data.getColumnRange(1).max},
+		              legend: 'none'
+		          };
+		
+		          // this binds the chart to our <div> 
+		          var charttwo = new google.visualization.ScatterChart(document.getElementById('charttwo'));
+		          charttwo.draw(view, options);
+	
+		           // f l o w  /  e n t r y 
+		
+		          // this view can select a subset of the data at a time
+		          var view = new google.visualization.DataView(data);
+		          view.setColumns([0,3]);
+		    
+		          // this sets basic options for our chart
+		          var options = {
+		              backgroundColor: 'transparent',
+		              title: "Mass Air Flow (per Entry)",
+		              hAxis: {title: data.getColumnLabel(0), minValue: data.getColumnRange(0).min, maxValue: data.getColumnRange(0).max},
+		              vAxis: {title: data.getColumnLabel(3), minValue: data.getColumnRange(3).min, maxValue: data.getColumnRange(3).max},
+		              legend: 'none'
+		          };
+	
+		          // this binds the chart to our <div> 
+		          var chartthree = new google.visualization.ScatterChart(document.getElementById('chartthree'));
+		          chartthree.draw(view, options);
+		
+		          // t h r o t t l e  /  e n t r y
+		
+		          // this view can select a subset of the data at a time
+		          var view = new google.visualization.DataView(data);
+		          view.setColumns([0,4]);
+		    
+		          // this sets basic options for our chart
+		          var options = {
+		              backgroundColor: 'transparent',
+		              title: "Throttle Position (per Entry)",
+		              hAxis: {title: data.getColumnLabel(0), minValue: data.getColumnRange(0).min, maxValue: data.getColumnRange(0).max},
+		              vAxis: {title: data.getColumnLabel(4), minValue: data.getColumnRange(4).min, maxValue: data.getColumnRange(4).max},
+		              legend: 'none'
+		          };
+	
+		          // this binds the chart to our <div> 
+		          var chartfour = new google.visualization.ScatterChart(document.getElementById('chartfour'));
+		          chartfour.draw(view, options);
+		
+		          // s p e e d  /  r p m
+		
+		          // this view can select a subset of the data at a time
+		          var view = new google.visualization.DataView(data);
+		          view.setColumns([2,1]);
+		    
+		          // this sets basic options for our chart
+		          var options = {
+		              backgroundColor: 'transparent',
+		              title: "Speed vs. Engine RPM (per Entry)",
+		              hAxis: {title: data.getColumnLabel(2), minValue: data.getColumnRange(2).min, maxValue: data.getColumnRange(2).max},
+		              vAxis: {title: data.getColumnLabel(1), minValue: data.getColumnRange(1).min, maxValue: data.getColumnRange(1).max},
+		              legend: 'none'
+		          };
+	
+		          // this binds the chart to our <div> 
+		          var chartfive = new google.visualization.ScatterChart(document.getElementById('chartfive'));
+		          chartfive.draw(view, options);
+		      });
+		   });
+		}
+	}
+   </script>
+</head>
+<body>
+   <body background="tredlight.jpg">
+   <h1 align="center">Dash++ Data Visualizations</h1>
+   <div id="chartone"></div>
+   <div id="charttwo"></div>
+   <div id="chartthree"></div>
+   <div id="chartfour"></div>
+   <div id="chartfive"></div>
+</body>
+</html>
