@@ -37,16 +37,18 @@ public class ClientThread extends Service
 	
 	@Override 
 	public IBinder onBind (Intent intent) {
+		System.out.println("BLAH BLAH BLAH");
 		return null;
 	}
 	
 	@Override
-	public void onCreate () 
+	public void onCreate() 
 	{
 		Log.d(getClass().getSimpleName(), "onCreate");
 		serverThread = new Thread (new Runnable() {
 			public void run()
 			{
+				System.out.println("RUNNING SOCKET!");
 				Looper.prepare();
 				InetAddress serverAddress = null;
 				try {
@@ -55,18 +57,21 @@ public class ClientThread extends Service
 					// TODO Auto-generated catch block
 					e3.printStackTrace();
 				}
+				System.out.println("RUNNING SOCKET!");
 				try {
 					socket = new Socket(serverAddress, SERVERPORT);
 				} catch (IOException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				}
+				System.out.println("RUNNING SOCKET!");
 				try {
 					socket.setReuseAddress(true);
 				} catch (SocketException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				System.out.println("RUNNING SOCKET!");
 				socket.setPerformancePreferences(100, 100, 1);
 				try {
 					socket.setKeepAlive(true);
@@ -74,7 +79,7 @@ public class ClientThread extends Service
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+				System.out.println("RUNNING SOCKET!");
 				DataInputStream _in = null;
 				
 				try {
@@ -83,9 +88,9 @@ public class ClientThread extends Service
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+				System.out.println("RUNNING SOCKET!");
 				while (!stopped)
-				{		
+				{
 					int method = 0;
 					try {
 						method = _in.read();
@@ -96,14 +101,14 @@ public class ClientThread extends Service
 					
 					switch (method) 
 					{
-					case 1: 
-						try {
-							doNotification(_in);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						break;
+						case 1:
+							try {
+								doNotification(_in);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							break;
 					}
 				}
 				

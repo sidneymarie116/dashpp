@@ -26,23 +26,25 @@ import android.widget.Toast;
 public class MainMenuActivity extends Activity {
 	
 	// -- Camera connection variables -- //
-	static Socket socket;
-	static final int SERVERPORT = 1035;
-	static final String SERVER_IP = "192.168.42.1";
+	//static Socket socket;
+	//static final int SERVERPORT = 1035;
+	//static final String SERVER_IP = "192.168.42.1";
 	
 		@Override
 		protected void onCreate (Bundle savedInstanceState) {
 				super.onCreate (savedInstanceState);
 				setContentView (R.layout.main_menu);
-				
 				// -- Camera connection -- //
-				try {
+				//try {
 					Intent srv = new Intent(this, ClientThread.class);
 					startService(srv);
+					/*
 				}
 				catch (Exception e) {
+					e.printStackTrace();
 					// Service could not be started
 				}
+				*/
 				
 				final Button switchActOne = (Button) findViewById (R.id.obdButton);
 				switchActOne.setOnClickListener (new View.OnClickListener() {
