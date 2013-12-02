@@ -3,18 +3,18 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>eu.lighthouselabs</groupId>
+    <groupId>dashpp</groupId>
     <artifactId>obd</artifactId>
     <version>1.3</version>
   </parent>
-  <groupId>eu.lighthouselabs.obd</groupId>
+  <groupId>dashpp.obd</groupId>
   <artifactId>reader</artifactId>
   <packaging>apk</packaging>
   <name>obd-reader</name>
 
   <dependencies>
     <dependency>
-      <groupId>eu.lighthouselabs.obd</groupId>
+      <groupId>dashpp.obd</groupId>
       <artifactId>api</artifactId>
       <version>${project.version}</version>
     </dependency>

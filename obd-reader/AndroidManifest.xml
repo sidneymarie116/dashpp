@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-     package="eu.lighthouselabs.obd.reader"
+     package="dashpp.obd.reader"
      android:versionCode="10"
      android:versionName="1.3">
       
@@ -24,7 +24,7 @@
         android:label="@string/app_name" 
         android:icon="@drawable/ic_launcher" >
         <activity 
-            android:name=".activity.MainMenuActivity"
+            android:name="dashpp.obd.reader.activity.MainMenuActivity"
             android:label="@string/app_name" 
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -34,49 +34,49 @@
         </activity>
         <!-- Contains OBDLink stuff -->
         <activity 
-            android:name=".activity.MainActivity"
+            android:name="dashpp.obd.reader.activity.MainActivity"
         	android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:launchMode="singleInstance" >
         </activity>
         <!-- Built-in to application -->
         <activity 
-            android:name=".activity.ConfigActivity"
+            android:name="dashpp.obd.reader.activity.ConfigActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity 
-            android:name=".activity.UsageActivity"
+            android:name="dashpp.obd.reader.activity.UsageActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <!-- For Profiling (Sid) -->
         <activity 
-            android:name=".activity.ProfileActivity"
+            android:name="dashpp.obd.reader.activity.ProfileActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <!-- For Camera connection -->
         <activity 
-            android:name=".activity.StreamActivity"
+            android:name="dashpp.obd.reader.activity.StreamActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <!-- Contains Text to Talk -->
         <activity 
-            android:name=".activity.AlertActivity"
+            android:name="dashpp.obd.reader.activity.AlertActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <!-- For Camera connection -->
         <activity 
-            android:name=".activity.ClientThread"
+            android:name="dashpp.obd.reader.activity.ClientThread"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
-        <service android:name=".activity.ClientThread" />
+        <service android:name="dashpp.obd.reader.activity.ClientThread" />
 
-		<service android:name=".io.ObdGatewayService" android:exported="false"/>
+		<service android:name="dashpp.obd.reader.io.ObdGatewayService" android:exported="false"/>
 		<service android:enabled="true" android:name="TestService" />
     </application>
 
