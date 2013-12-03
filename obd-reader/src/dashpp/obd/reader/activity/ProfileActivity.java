@@ -56,16 +56,6 @@ public class ProfileActivity extends Activity {
 		{
 			e.printStackTrace();
 		}
-			
-		try 
-		{
-			Toast.makeText(getApplicationContext(), "calculating global averages", Toast.LENGTH_SHORT).show();
-			calculateGlobalAverages();
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
 	}
 	
 	private void calculateTripAverages() throws FileNotFoundException 
@@ -148,7 +138,7 @@ public class ProfileActivity extends Activity {
 		finally 
 		{
 			analytics.close();
-			
+						
 			//calculate trip averages
 			air_temp_trip = air_temp_trip / num_entries_trip;
 			engine_rpm_trip = engine_rpm_trip / num_entries_trip;
@@ -159,10 +149,6 @@ public class ProfileActivity extends Activity {
 			speed_trip = speed_trip / num_entries_trip;
 			fuel_cons_trip = fuel_cons_trip / num_entries_trip;
 			fuel_econ_trip = fuel_econ_trip / num_entries_trip;
-			
-			Toast.makeText(getApplicationContext(), "Num: " + num_entries_trip, Toast.LENGTH_SHORT).show();
-			Toast.makeText(getApplicationContext(), "Temp: " + air_temp_trip, Toast.LENGTH_SHORT).show();
-			Toast.makeText(getApplicationContext(), "RPM: " + engine_rpm_trip, Toast.LENGTH_SHORT).show();
 							        
 			//update averages table!
 			addTableRow("Air Temp", air_temp_trip);
@@ -174,10 +160,20 @@ public class ProfileActivity extends Activity {
 			addTableRow("Speed", speed_trip);
 			addTableRow("Fuel Consumption", fuel_cons_trip);
 			addTableRow("Fuel Economy", fuel_econ_trip);
+			
+			try 
+			{
+				Toast.makeText(getApplicationContext(), "calculating global averages", Toast.LENGTH_SHORT).show();
+				calculateGlobalAverages(num_entries_trip);
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
 		} 
 	}
 		
-	private void calculateGlobalAverages() throws IOException 
+	private void calculateGlobalAverages(int num_entries_trip) throws IOException 
 	{		
 		//array of doubles to store global averages
 		double air_temp = 0;
@@ -225,7 +221,7 @@ public class ProfileActivity extends Activity {
 		
 		weighted_avg_trip = 0;
 		weighted_avg_tot = 0;
-		
+				
 		//calculate weights
 		if (num_entries == 1)
 			weighted_avg_trip = 1;
@@ -245,9 +241,8 @@ public class ProfileActivity extends Activity {
 		fuel_econ = (fuel_econ*weighted_avg_tot) + (fuel_econ_trip*weighted_avg_trip);
 		num_entries += num_entries_trip;
 		
-		Toast.makeText(getApplicationContext(), "AvgTotl: " + weighted_avg_tot, Toast.LENGTH_SHORT).show();
-		Toast.makeText(getApplicationContext(), "AvgTrip: " + weighted_avg_trip, Toast.LENGTH_SHORT).show();
-
+		Toast.makeText(getApplicationContext(), "Num: " + num_entries, Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), "Num: " + num_entries_trip, Toast.LENGTH_SHORT).show();
 		
         // update averages table!
         addTableRow("Avg. Air Temp", air_temp);
@@ -284,6 +279,7 @@ public class ProfileActivity extends Activity {
 		    myOutWriter.flush();
 			myOutWriter.close();
 			fOut.close();
+			Toast.makeText(getApplicationContext(), "Wrote to file", Toast.LENGTH_SHORT).show();
         }
 	}
     
