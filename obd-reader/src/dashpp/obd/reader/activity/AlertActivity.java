@@ -3,35 +3,20 @@ package dashpp.obd.reader.activity;
 import dashpp.obd.reader.R;
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.view.ViewGroup.MarginLayoutParams;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.speech.tts.TextToSpeech;
-import android.speech.tts.TextToSpeech.OnInitListener;
-import android.content.Intent;
-import android.graphics.Color;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Locale;
 import android.widget.Toast;
 
 public class AlertActivity extends Activity {
+	
+	public static int MONITOR = 100; // 0 | 50 | 100
 	
 	static final int TABLE_ROW_MARGIN = 7;
 	
@@ -39,8 +24,8 @@ public class AlertActivity extends Activity {
 	protected void onCreate (Bundle savedInstanceState) 
 	{
 		super.onCreate (savedInstanceState);
-		setContentView (R.layout.profile);
-
+		setContentView (R.layout.alert);
+		
 		try {
 			makeProfile();
 		} catch (FileNotFoundException e) {
@@ -77,27 +62,35 @@ public class AlertActivity extends Activity {
 		int speed_oor = (int) Double.parseDouble(myStrings[11]);
 		boolean bad = false;
 		
-		if(throttle_oor > 5) {
+		if (throttle_oor > 5) {
 			//you seem to be accelerating quickly, try letting up on that gas pedal
 			//a bit
+			updateTextView("You seem to be accelerating quickly, try letting up on that gas pedal!");
+			MONITOR = 75;
+			/*
 			LinearLayout lView = new LinearLayout(this);
 			TextView myText = new TextView(this);
 			myText.setText("You seem to be accelerating quickly, try letting up on that gas pedal!");
 			lView.addView(myText);
 			setContentView(lView);
+			*/
 			
 			bad = true;
 		} else {
 			//you're doing okay!!  do nothing.
 		}
 		
-		if(speed_oor > 10) {
+		if (speed_oor > 10) {
 			//SLOW DOWN THERE BUDDY!!!!
+			updateTextView("Slow down there!  Your speed has been over 80 mph too often lately..");
+			MONITOR = 50;
+			/*
 			LinearLayout lView = new LinearLayout(this);
 			TextView myText = new TextView(this);
 			myText.setText("Slow down there!  Your speed has been over 80 mph too often lately..");
 			lView.addView(myText);
 			setContentView(lView);
+			*/
 			
 			bad = true;
 		} else {
@@ -105,14 +98,27 @@ public class AlertActivity extends Activity {
 		}
 		
 		if (bad == false) {
+			//Doing well driver, you go you!!!!
+			updateTextView("Keep up the safe driving. You deserve an award!");
+			MONITOR = 100;
+			/*
 			LinearLayout lView = new LinearLayout(this);
 			TextView myText = new TextView(this);
 			myText.setText("Keep up the good work!!!!");
 			lView.addView(myText);
 			setContentView(lView);
+			*/
 		}
 		
 		//anything else we can analyze here?!
+	}
+	
+	public void updateTextView(String toThis) {
+
+	    TextView textView = (TextView) findViewById(R.id.alert_text);
+	    textView.setText(toThis);
+
+	    return;
 	}
 
 }

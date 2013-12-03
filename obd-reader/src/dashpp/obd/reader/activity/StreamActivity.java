@@ -24,6 +24,7 @@ public class StreamActivity extends Activity {
 			super.onCreate (savedInstanceState);
 			setContentView (R.layout.stream);
 
+			/*
 			WebView web = (WebView) findViewById(R.id.myWebView);
 			web.getSettings().setJavaScriptEnabled(true);
 
@@ -43,6 +44,7 @@ public class StreamActivity extends Activity {
 			// web.loadUrl("http://www.techrepubilc.com");
 			// web.loadUrl("https://drive.google.com/file/d/0B_Ll_Vw4Gui8UFhzOFluRk1YZkU");
 			web.loadUrl("file:///android_asset/chart/testOutput.html");
-			web.loadUrl("https://drive.google.com/file/d/0B_Ll_Vw4Gui8VE53aWs2QTJoRHM/edit?usp=sharing");
+			web.loadUrl("https://drive.google.com/file/d/0B_Ll_Vw4Gui8VmRHdkE2eHNPZHc/edit?usp=sharing");
+			*/
 	}
 }

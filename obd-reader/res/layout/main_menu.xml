@@ -42,17 +42,6 @@
         android:background="#75999999"
         android:text="How&apos;s My Drive?" />
 
-    <!-- Collision monitoring and history -->
-    <!-- CollisionActivity -->
-
-    <Button
-        android:id="@+id/collisionButton"
-        android:layout_width="152dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_weight="0.10"
-        android:background="#75999999"
-        android:text="Live Notify" />
 
     <!-- Set notifications, select metrics -->
     <!-- SettingsActivity -->

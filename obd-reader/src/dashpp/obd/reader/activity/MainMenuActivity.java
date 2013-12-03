@@ -1,7 +1,5 @@
 package dashpp.obd.reader.activity;
 
-import java.net.Socket;
-
 import dashpp.obd.reader.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -9,19 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainMenuActivity extends Activity {
 	
@@ -71,18 +56,6 @@ public class MainMenuActivity extends Activity {
 					public void onClick (View v) {
 						// TODO Auto-generated method stub
 						Intent act = new Intent (v.getContext(), AlertActivity.class);
-						((Button)v).setBackgroundColor(Color.WHITE);
-						startActivity (act);
-					}
-				});
-				
-				final Button switchActFour = (Button) findViewById (R.id.collisionButton);
-				switchActFour.setOnClickListener (new View.OnClickListener() {
-					
-					@Override
-					public void onClick (View v) {
-						// TODO Auto-generated method stub
-						Intent act = new Intent (v.getContext(), ClientThread.class);
 						((Button)v).setBackgroundColor(Color.WHITE);
 						startActivity (act);
 					}
