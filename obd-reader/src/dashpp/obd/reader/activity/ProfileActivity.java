@@ -1,22 +1,15 @@
 package dashpp.obd.reader.activity;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 import dashpp.obd.reader.R;
 import android.app.Activity;
-import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
-import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -40,6 +33,8 @@ public class ProfileActivity extends Activity {
 	double fuel_cons_trip = 0;
 	double fuel_econ_trip = 0;
 	int num_entries_trip = 0;     // or use some variation of num_entries
+	int throttle_oor_trip = 0;
+	int speed_oor_trip = 0;
 	
 	@Override
 	protected void onCreate (Bundle savedInstanceState) 
@@ -69,7 +64,6 @@ public class ProfileActivity extends Activity {
 		double speed = 0;
 		double fuel_cons = 0;
 		double fuel_econ = 0;
-		int num_entries = 0;
 		int num_entries_trip = 0;   //or use some variation of num_entries
 	
 		String csvFile = "/sdcard/formatted.csv";
@@ -117,9 +111,15 @@ public class ProfileActivity extends Activity {
 
 				throt = Double.parseDouble(analytics.get("Throttle")); // *
         		throt_trip += throt;
+        		if(throt > 25) {
+        			throttle_oor_trip++;
+        		}
 
 				speed = Double.parseDouble(analytics.get("Speed")); // *
         		speed_trip += speed;
+        		if(speed > 80) {
+        			speed_oor_trip++;
+        		}
 
 				fuel_cons = Double.parseDouble(analytics.get("FuelCons")); // *
         		fuel_cons_trip += fuel_cons;
@@ -186,16 +186,16 @@ public class ProfileActivity extends Activity {
 		double fuel_cons = 0;
 		double fuel_econ = 0;
 		int num_entries = 0;
+		int throttle_oor = 0;
+		int speed_oor = 0;
 		double weighted_avg_trip = 0;
 		double weighted_avg_tot = 0;
-		
-		ArrayList<String> myNums = new ArrayList<String>();
-		
+				
 		// read global average from memory
 		File myFile = new File("/sdcard/globally.txt");
 		FileInputStream fIn = new FileInputStream(myFile);
 		BufferedReader myReader = new BufferedReader(new InputStreamReader(fIn));
-		String myStrings[] = new String [10];
+		String myStrings[] = new String [12];
 		
 		try 
 		{
@@ -218,6 +218,8 @@ public class ProfileActivity extends Activity {
 		speed = Double.parseDouble(myStrings[7]); 
 		fuel_cons = Double.parseDouble(myStrings[8]); 
 		fuel_econ = Double.parseDouble(myStrings[9]); 
+		throttle_oor = (int) Double.parseDouble(myStrings[10]);
+		speed_oor = (int) Double.parseDouble(myStrings[11]);
 		
 		weighted_avg_trip = 0;
 		weighted_avg_tot = 0;
@@ -240,9 +242,8 @@ public class ProfileActivity extends Activity {
 		fuel_cons = (fuel_cons*weighted_avg_tot) + (fuel_cons_trip*weighted_avg_trip);
 		fuel_econ = (fuel_econ*weighted_avg_tot) + (fuel_econ_trip*weighted_avg_trip);
 		num_entries += num_entries_trip;
-		
-		Toast.makeText(getApplicationContext(), "Num: " + num_entries, Toast.LENGTH_SHORT).show();
-		Toast.makeText(getApplicationContext(), "Num: " + num_entries_trip, Toast.LENGTH_SHORT).show();
+		throttle_oor += throttle_oor_trip;
+		speed_oor += speed_oor_trip;
 		
         // update averages table!
         addTableRow("Avg. Air Temp", air_temp);
@@ -272,14 +273,15 @@ public class ProfileActivity extends Activity {
 		    myOutWriter.write(speed + "\n");
 		    myOutWriter.write(fuel_cons + "\n");
 		    myOutWriter.write(fuel_econ + "\n");
-
+		    myOutWriter.write(throttle_oor + "\n");
+		    myOutWriter.write(speed_oor + "\n");
         }
         finally 
         {
 		    myOutWriter.flush();
 			myOutWriter.close();
 			fOut.close();
-			Toast.makeText(getApplicationContext(), "Wrote to file", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "writing to global file", Toast.LENGTH_SHORT).show();
         }
 	}
     
