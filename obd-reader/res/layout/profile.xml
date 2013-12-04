@@ -2,13 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/tred"
     android:orientation="vertical" >
 
+    <TextView
+      android:id="@+id/textView1"
+      android:layout_width="wrap_content"
+      android:layout_height="24pt"
+      android:gravity="center_vertical"
+      android:text="                    Driver Profiling"
+      android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <LinearLayout android:layout_width="match_parent"
+      android:layout_height="2dp"
+      android:background="@android:color/darker_gray" 
+      android:padding="5dp">
+	</LinearLayout>
     
 	<TableLayout
 	  android:id="@+id/averages_table"
 	  android:layout_width="fill_parent"
 	  android:layout_height="wrap_content"
+	  android:layout_marginTop="10dp"
 	  android:layout_gravity="center"
 	  android:gravity="center"
 	  android:stretchColumns="*"

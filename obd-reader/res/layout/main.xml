@@ -19,7 +19,7 @@
           android:layout_gravity="top|left"/>
       	<TextView
       	  android:text="0"
-      	  android:id="@+id/fuel_econ_text"
+      	  android:id="@+id/spd_text"
       	  android:textSize="115px"
       	  android:gravity="bottom|right"/>
       	<TextView
@@ -83,7 +83,7 @@
       	  android:id="@+id/rpm_text"
       	  android:text=""/>
       	<TextView
-      	  android:id="@+id/spd_text"
+      	  android:id="@+id/fuel_econ_text"
       	  android:text=""/>
       </TableRow>
     </TableLayout>

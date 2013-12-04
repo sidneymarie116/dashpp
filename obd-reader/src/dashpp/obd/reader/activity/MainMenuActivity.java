@@ -32,7 +32,6 @@ public class MainMenuActivity extends Activity {
 					public void onClick (View v) {
 						// TODO Auto-generated method stub
 						Intent act = new Intent (v.getContext(), MainActivity.class);
-						((Button)v).setBackgroundColor(Color.WHITE);
 						startActivity (act);
 					}
 				});
@@ -44,7 +43,6 @@ public class MainMenuActivity extends Activity {
 					public void onClick (View v) {
 						// TODO Auto-generated method stub
 						Intent act = new Intent (v.getContext(), StreamActivity.class);
-						((Button)v).setBackgroundColor(Color.WHITE);
 						startActivity (act);
 					}
 				});
@@ -56,7 +54,6 @@ public class MainMenuActivity extends Activity {
 					public void onClick (View v) {
 						// TODO Auto-generated method stub
 						Intent act = new Intent (v.getContext(), AlertActivity.class);
-						((Button)v).setBackgroundColor(Color.WHITE);
 						startActivity (act);
 					}
 				});
@@ -68,7 +65,6 @@ public class MainMenuActivity extends Activity {
 					public void onClick (View v) {
 						// TODO Auto-generated method stub
 						Intent act = new Intent (v.getContext(), ProfileActivity.class);
-						((Button)v).setBackgroundColor(Color.WHITE);
 						startActivity (act);
 					}
 				});
@@ -80,7 +76,6 @@ public class MainMenuActivity extends Activity {
 					public void onClick (View v) {
 						// TODO Auto-generated method stub
 						Intent act = new Intent (v.getContext(), UsageActivity.class);
-						((Button)v).setBackgroundColor(Color.WHITE);
 						startActivity (act);
 					}
 				});
